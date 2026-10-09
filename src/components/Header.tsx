@@ -4,14 +4,13 @@ import { Suspense } from "react";
 import CurrentDate from "./CurrentDate";
 import NavLink from "./NavLink";
 import Link from "next/link";
+import MarketMarquee from "./Marquee";
 
 const Header = () => {
 
     // const date = new Date().toLocaleDateString("bn-BD", {
     //     dateStyle: "full"
     // })
-
-
 
     return (
         <div>
@@ -48,6 +47,13 @@ const Header = () => {
                 <div>
                     <Suspense fallback={null}>
                         <NavLink />
+                    </Suspense>
+                </div>
+            </div>
+            <div className=" border-b border-gray-200">
+                <div>
+                    <Suspense fallback={null}>
+                     <MarketMarquee></MarketMarquee>
                     </Suspense>
                 </div>
             </div>
