@@ -38,7 +38,7 @@ const Cards = async() => {
     const totalProducts = data.length.toLocaleString('bn-BD');
 
     return (
-        <div className="w-full max-w-7xl mx-auto px-4 py-8 min-h-screen">
+        <div className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 sm:py-8">
        
 
             {upProducts.length > 0 && (
@@ -46,7 +46,7 @@ const Cards = async() => {
                     <h2 className="text-lg font-bold text-red-600 flex items-center gap-2 mb-4">
                         <span>▲</span> আজ দাম বেড়েছে
                     </h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                         {upProducts.map((item) => (
                             <ProductCard key={`up-${item.id}`} item={item} />
                         ))}
@@ -60,7 +60,7 @@ const Cards = async() => {
                     <h2 className="text-lg font-bold text-green-700 flex items-center gap-2 mb-4">
                         <span>▼</span> আজ দাম কমেছে
                     </h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                         {downProducts.map((item) => (
                             <ProductCard key={`down-${item.id}`} item={item} />
                         ))}
@@ -74,7 +74,7 @@ const Cards = async() => {
                     <h2 className="text-xl font-extrabold text-gray-900">সব পণ্য</h2>
                     <p className="text-sm text-gray-500 mt-0.5">মোট {totalProducts}টি পণ্য দেখানো হচ্ছে</p>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     {data.map((item) => (
                         <ProductCard key={`all-${item.id}`} item={item} />
                     ))}

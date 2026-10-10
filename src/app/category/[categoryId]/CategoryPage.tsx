@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { IProductInfo } from '@/types/ProductInfo';
 import CategoryProductsList from './CategoryProductsList';
+import { notFound } from 'next/navigation';
 
 
 interface ListProps {
@@ -21,16 +22,17 @@ const CategoryProductsPage = async ({ dataPromise }: ListProps) => {
     const products: IProductInfo[] = await res.json();
 
     if (!products || products.length === 0) {
-        return (
-            <div className="max-w-md mx-auto my-20 text-center select-none px-4">
-                <span className="text-6xl block mb-4">🔍</span>
-                <h1 className="text-xl font-bold text-gray-900 mb-2">দুঃখিত, কোনো পণ্য পাওয়া যায়নি!</h1>
-                <p className="text-sm text-gray-400 mb-6">এই ক্যাটাগরিতে এই মুহূর্তে কোনো তথ্য নেই অথবা ইউআরএলটি সঠিক নয়।</p>
-                <Link href="/" className="inline-block px-5 py-2.5 bg-[#007f3e] hover:bg-[#006632] text-white font-semibold text-sm rounded-lg transition-colors shadow-sm">
-                    হোম পেজে ফিরে যান
-                </Link>
-            </div>
-        );
+        // return (
+        //     <div className="max-w-md mx-auto my-20 text-center select-none px-4">
+        //         <span className="text-6xl block mb-4">🔍</span>
+        //         <h1 className="text-xl font-bold text-gray-900 mb-2">দুঃখিত, কোনো পণ্য পাওয়া যায়নি!</h1>
+        //         <p className="text-sm text-gray-400 mb-6">এই ক্যাটাগরিতে এই মুহূর্তে কোনো তথ্য নেই অথবা ইউআরএলটি সঠিক নয়।</p>
+        //         <Link href="/" className="inline-block px-5 py-2.5 bg-[#007f3e] hover:bg-[#006632] text-white font-semibold text-sm rounded-lg transition-colors shadow-sm">
+        //             হোম পেজে ফিরে যান
+        //         </Link>
+        //     </div>
+        // );
+        notFound();
     }
 
 
@@ -39,7 +41,7 @@ const CategoryProductsPage = async ({ dataPromise }: ListProps) => {
     const categoryIcon = firstItem?.categoryIcon;
 
     return (
-        <div className="max-w-6xl mx-auto p-4 md:p-6 space-y-6 select-none">
+        <div className="mx-auto w-full max-w-6xl space-y-6 p-4 select-none sm:p-6">
             
             <div className="text-xs text-gray-500">
                 <Link href="/" className="hover:underline">হোম</Link>

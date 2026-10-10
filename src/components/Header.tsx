@@ -14,16 +14,16 @@ const Header = () => {
 
     return (
         <div>
-            <div className=" border-b border-gray-200">
+            <div className="border-b border-gray-200">
 
-                <div className='flex justify-between py-2 max-w-7xl px-4 mx-auto'>
-                    <div className='flex gap-2'>
-                        <Link href="/" className="bg-[#05893e] w-12 h-12 rounded-xl flex items-center justify-center">
+                <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-x-3 gap-y-2 px-4 py-2 sm:px-6">
+                    <div className="flex min-w-0 items-center gap-2">
+                        <Link href="/" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#05893e] sm:h-12 sm:w-12">
                             <div className="text-xl">🛒</div>
                         </Link>
-                        <div>
-                            <h1 className='font-bold text-xl'>বাজার দর</h1>
-                            <p className="text-gray-700">
+                        <div className="min-w-0">
+                            <h1 className="text-lg font-bold sm:text-xl">বাজার দর</h1>
+                            <p className="max-w-40 truncate text-xs text-gray-700 sm:max-w-none sm:text-sm">
                                 <Suspense fallback={null}>
                                     <CurrentDate />
                                 </Suspense>
@@ -31,29 +31,29 @@ const Header = () => {
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-6">
-                        <button className="text-gray-800 hover:text-gray-600 font-medium text-base transition-colors">
+                    <div className="flex shrink-0 items-center gap-2 sm:gap-6">
+                        <button className="whitespace-nowrap text-xs font-medium text-gray-800 transition-colors hover:text-gray-600 sm:text-base">
                             সাইন ইন
                         </button>
 
-                        <button className="bg-[#05893e] hover:bg-[#007038] text-white font-medium text-base px-6 py-2.5 rounded-lg shadow-sm shadow-green-600 transition-all">
+                        <button className="whitespace-nowrap rounded-lg bg-[#05893e] px-3 py-2 text-xs font-medium text-white shadow-sm shadow-green-600 transition-all hover:bg-[#007038] sm:px-6 sm:py-2.5 sm:text-base">
                             সাইন আপ
                         </button>
                     </div>
                 </div>
             </div>
 
-            <div className=" border-b border-gray-200">
-                <div>
+            <div className="border-b border-gray-200">
+                <nav aria-label="পণ্যের বিভাগ">
                     <Suspense fallback={null}>
                         <NavLink />
                     </Suspense>
-                </div>
+                </nav>
             </div>
-            <div className=" border-b border-gray-200">
+            <div className="border-b border-gray-200">
                 <div>
                     <Suspense fallback={null}>
-                     <MarketMarquee></MarketMarquee>
+                        <MarketMarquee />
                     </Suspense>
                 </div>
             </div>

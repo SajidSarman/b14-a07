@@ -54,14 +54,14 @@ const ProductCard = ({ item }: { item: IProductInfo }) => {
 
     return (
         <Link
-            href={`/products/${item.id}`}
-            className="block bg-[#fcfdfc] border border-gray-100 rounded-[20px] p-5 hover:shadow-sm transition-all duration-200 select-none cursor-pointer"
+            href={`/product/${item.id}`}
+            className="block cursor-pointer rounded-[20px] border border-gray-100 bg-[#fcfdfc] p-4 transition-all duration-200 shadow-sm hover:shadow-lg sm:p-5"
         >
-            <div className="flex items-center gap-3">
+            <div className="flex min-w-0 items-center gap-3">
                 <div className="w-12 h-12 rounded-xl bg-[#f4f6f4] flex items-center justify-center text-2xl shrink-0">
                     {item.image || item.categoryIcon}
                 </div>
-                <div>
+                <div className="min-w-0">
                     <h3 className="font-bold text-gray-900 truncate text-base leading-snug">
                         {item.nameBn}
                     </h3>
@@ -75,12 +75,12 @@ const ProductCard = ({ item }: { item: IProductInfo }) => {
                 আজকের দাম
             </div>
 
-            <div className="flex items-center justify-between mt-1">
-                <span className="text-2xl font-extrabold">
-                    {banglaPrice} <span className="text-lg font-normal text-gray-800 ml-0.5">টাকা</span>
+            <div className="mt-1 flex flex-wrap items-center justify-between gap-2">
+                <span className="text-xl font-extrabold sm:text-2xl">
+                    {banglaPrice} <span className="ml-0.5 text-base font-normal text-gray-800 sm:text-lg">টাকা</span>
                 </span>
 
-                <div className={`px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 ${badgeColor}`}>
+                <div className={`flex items-center gap-1 whitespace-nowrap rounded-full px-2 py-1 text-xs font-bold sm:px-3 ${badgeColor}`}>
                     <span>{trendSymbol}</span>
                     <span>{banglaPercentage}%</span>
                 </div>

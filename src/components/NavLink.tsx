@@ -16,8 +16,8 @@ const NavLink = async () => {
     const data: Navs[] = await res.json()
     // console.log("data from api: ", data)
     return (
-        <div className='flex gap-10 py-2 max-w-7xl px-7 mx-auto'>
-            {data.map(item => <Link key={item.id} href={`/category/${item.slug}`} className='flex items-center gap-2 text-gray-800 hover:text-gray-600 font-medium text-base transition-colors'>
+        <div className="mx-auto flex w-full max-w-6xl gap-5 overflow-x-auto px-4 py-2 sm:gap-10 sm:px-6">
+            {data.map(item => <Link key={item.id} href={`/category/${item.slug}`} className="flex shrink-0 items-center gap-2 text-sm font-medium text-gray-800 transition-colors hover:text-gray-600 sm:text-base">
                 <div>{item.icon}</div>
                 {item.nameBn}
             </Link>)}
