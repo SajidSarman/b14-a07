@@ -1,0 +1,130 @@
+'use client';
+
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { type FormEvent, useState } from 'react';
+import { Button, FieldError, Form, Input, Label, TextField } from '@heroui/react';
+import { authClient } from '@/lib/auth-client';
+
+const inputClassName = 'mt-1.5 w-full rounded-lg border border-[#dce6de] bg-transparent px-3 py-2.5 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-[#05893e] focus:ring-2 focus:ring-[#05893e]/15';
+
+const SignInPage = () => {
+    const router = useRouter();
+    const [error, setError] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        setError('');
+
+        const formData = new FormData(event.currentTarget);
+        const email = String(formData.get('email') ?? '').trim();
+        const password = String(formData.get('password') ?? '');
+
+        setIsSubmitting(true);
+        try {
+            const result = await authClient.signIn.email({
+                email,
+                password,
+                callbackURL: '/',
+            });
+
+            if (result.error) {
+                setError(result.error.message ?? 'সাইন ইন করা যায়নি। আবার চেষ্টা করুন।');
+                
+                return;
+            }
+
+            router.replace('/');
+        } catch (submitError) {
+            setError(submitError instanceof Error
+                ? submitError.message
+                : 'সার্ভারের সঙ্গে যোগাযোগ করা যায়নি। আবার চেষ্টা করুন।');
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+    return (
+        <main className="flex w-full flex-1 flex-col items-center justify-center bg-[#f0f5f0] px-4 py-10 sm:px-6">
+            <section className="w-full max-w-sm">
+                <div className="mb-6 text-center">
+                    <h1 className="text-2xl font-extrabold text-gray-900 sm:text-3xl">আবার স্বাগতম</h1>
+                    <p className="mt-1 text-sm text-gray-500">আপনার অ্যাকাউন্টে সাইন ইন করুন</p>
+                </div>
+
+                <div className="rounded-2xl border border-[#e1e9e2] bg-white/80 p-5 shadow-sm sm:p-6">
+                    <Form className="flex flex-col gap-4" onSubmit={onSubmit}>
+                        <TextField
+                            className="flex flex-col gap-1"
+                            isRequired
+                            name="email"
+                            type="email"
+                            aria-labelledby="signin-email-label"
+                            validate={(value) => {
+                                if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
+                                    return 'সঠিক ইমেইল ঠিকানা লিখুন।';
+                                }
+
+                                return null;
+                            }}
+                        >
+                            <Label id="signin-email-label" className="text-sm font-medium text-gray-800">ইমেইল</Label>
+                            <Input
+                                autoComplete="email"
+                                className={inputClassName}
+                                placeholder="you@example.com"
+                                type="email"
+                            />
+                            <FieldError className="text-sm text-red-600" />
+                        </TextField>
+
+                        <TextField
+                            aria-labelledby="signin-password-label"
+                            className="flex flex-col gap-1"
+                            isRequired
+                            name="password"
+                            type="password"
+                        >
+                            <Label id="signin-password-label" className="text-sm font-medium text-gray-800">পাসওয়ার্ড</Label>
+                            <Input
+                                autoComplete="current-password"
+                                className={inputClassName}
+                                placeholder="আপনার পাসওয়ার্ড লিখুন"
+                                type="password"
+                            />
+                            <FieldError className="text-sm text-red-600" />
+                        </TextField>
+
+                        {error && (
+                            <p className="text-sm text-red-600">
+                                {error}</p>
+                        )}
+
+                        <Button
+                            className="mt-1 w-full rounded-lg bg-[#05893e] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#007038] disabled:cursor-not-allowed disabled:opacity-60"
+                            isDisabled={isSubmitting}
+                            type="submit"
+                        >
+                            {isSubmitting ? 'সাইন ইন হচ্ছে…' : 'সাইন ইন'}
+                        </Button>
+                    </Form>
+
+                    <p className="mt-5 text-center text-sm text-gray-600">
+                        <span className='pr-2'>অ্যাকাউন্ট নেই?</span>
+                        
+                        <Link className="font-semibold text-[#05893e] hover:underline" href="/sign-up">
+                            অ্যাকাউন্ট তৈরি করুন
+                        </Link>
+                    </p>
+                </div>
+            </section>
+
+            <Link className="mt-5 text-sm text-gray-500 transition-colors hover:text-[#05893e]" href="/">
+                ← হোম পেজে ফিরে যান
+            </Link>
+        </main>
+    );
+};
+
+export default SignInPage;

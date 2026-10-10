@@ -1,0 +1,64 @@
+// import { betterAuth } from "better-auth";
+// import { MongoClient } from "mongodb";
+// import { mongodbAdapter } from "@better-auth/mongo-adapter";
+
+// const mongoUrl = process.env.MONGODB_URL;
+
+// if (!mongoUrl) {
+//     throw new Error("MONGODB_URL is missing. Add it to the project-root .env file.");
+// }
+
+// const client = new MongoClient(mongoUrl);
+// const db = client.db("Bazar-Dor_B14-A07");
+
+// export const auth = betterAuth({
+    
+//     emailAndPassword: {
+//         enabled: true,
+//     },
+
+//     database: mongodbAdapter(db, {
+//         client,
+//     }),
+// });
+
+
+import { betterAuth } from "better-auth";
+import { MongoClient } from "mongodb";
+import { mongodbAdapter } from "@better-auth/mongo-adapter";
+
+// const mongoUrl = process.env.MONGODB_URL;
+
+// if (!mongoUrl) {
+//     throw new Error("MONGODB_URL is missing. Add it to the project-root .env file.");
+// }
+
+// const client = new MongoClient(mongoUrl);
+
+const client = new MongoClient(process.env.MONGODB_URL as string);
+const db = client.db("Bazar-Dor_B14-A07");
+
+export const auth = betterAuth({
+    
+    emailAndPassword: {
+        enabled: true,
+    },
+
+    database: mongodbAdapter(db, {
+        client,
+    }),
+});
+
+
+// import { betterAuth } from "better-auth";
+// import { MongoClient } from "mongodb";
+// import { mongodbAdapter } from "@better-auth/mongo-adapter";
+
+// const client = new MongoClient(process.env.MONGODB_URL as string);
+// const db = client.db();
+
+// export const auth = betterAuth({
+//   database: mongodbAdapter(db, {
+//     client,
+//   }),
+// });
