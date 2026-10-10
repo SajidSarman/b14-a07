@@ -1,21 +1,26 @@
+import { IProductInfo } from '@/types/ProductInfo';
 import React from 'react';
 import Marquee from "react-fast-marquee";
 
-interface Headlines { 
-    id: number; 
-    image?: string; 
-    categoryIcon?: string; 
-    nameBn: string; 
-    today: number; 
-    unit: string; 
-    change?: { dir: 'up' | 'down' | 'flat'; pct: number }
-}
+// interface Headlines { 
+//     id: number; 
+//     image?: string; 
+//     categoryIcon?: string; 
+//     nameBn: string; 
+//     today: number; 
+//     unit: string; 
+//     change?: { dir: 'up' | 'down' | 'flat'; pct: number }
+// }
 
 const MarketMarquee = async() => {
-    const res = await fetch("https://api.abcz.workers.dev/api/bazardor/products")
-    const data: Headlines[] = await res.json()
+    const res = await fetch("https://api.api-store.workers.dev/api/bazardor/products", {
+    // const res = await fetch("https://api.abcz.workers.dev/api/bazardor/products", {
+    next: { revalidate: 60 }
+})
+
+    const data: IProductInfo[] = await res.json()
     const topTen = data.slice(0, 10)
-    console.log("Marquee: ", topTen)
+    // console.log("Marquee: ", topTen)
     
 
     return (

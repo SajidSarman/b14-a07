@@ -4,8 +4,8 @@ import CurrentDate from './CurrentDate';
 
 const Banner = () => {
     return (
-        <div >
-            <div className="w-full container mx-auto my-5 p-7 bg-[#f7f9f6] rounded-3xl border border-gray-100 flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden select-none">
+        <div className='max-w-7xl px-4 mx-auto'>
+            <div className="w-full my-5 p-7 bg-[#f7f9f6] rounded-3xl border border-gray-100 flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden select-none">
 
                 <div className="flex-1 flex flex-col items-start text-left">
 

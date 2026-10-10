@@ -1,19 +1,20 @@
+import { IProductInfo } from '@/types/ProductInfo';
 import Link from 'next/link';
 import React from 'react';
 
 
-interface Headlines {
-    id: number;
-    image?: string;
-    categoryIcon?: string;
-    nameBn: string;
-    today: number;
-    unit: string;
-    change?: {
-        dir: 'up' | 'down' | 'flat';
-        pct: number;
-    };
-}
+// interface Headlines {
+//     id: number;
+//     image?: string;
+//     categoryIcon?: string;
+//     nameBn: string;
+//     today: number;
+//     unit: string;
+//     change?: {
+//         dir: 'up' | 'down' | 'flat';
+//         pct: number;
+//     };
+// }
 
 
 // translate
@@ -28,7 +29,7 @@ const getBenglaUnit = (unit: string): string => {
 };
 
 
-const ProductCard = ({ item }: { item: Headlines }) => {
+const ProductCard = ({ item }: { item: IProductInfo }) => {
     const isUp = item.change?.dir === 'up';
     const isDown = item.change?.dir === 'down';
 

@@ -1,25 +1,27 @@
 import React from 'react';
 import ProductCard from './ProductCard';
+import { IProductInfo } from '@/types/ProductInfo';
 
 
-interface Headlines {
-    id: number;
-    image?: string;
-    categoryIcon?: string;
-    nameBn: string;
-    today: number;
-    unit: string;
-    change?: { 
-        dir: 'up' | 'down' | 'flat'; 
-        pct: number; 
-    };
-}
+// interface Headlines {
+//     id: number;
+//     image?: string;
+//     categoryIcon?: string;
+//     nameBn: string;
+//     today: number;
+//     unit: string;
+//     change?: { 
+//         dir: 'up' | 'down' | 'flat'; 
+//         pct: number; 
+//     };
+// }
 
 const Cards = async() => {
-    const res = await fetch("https://api.abcz.workers.dev/api/bazardor/products", {
+    const res = await fetch("https://api.api-store.workers.dev/api/bazardor/products", {
+    // const res = await fetch("https://api.abcz.workers.dev/api/bazardor/products", {
         next: { revalidate: 60 }
     });
-    const data: Headlines[] = await res.json();
+    const data: IProductInfo[] = await res.json();
 
     const upProducts = data
         .filter(item => item.change?.dir === 'up')
