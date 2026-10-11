@@ -35,7 +35,7 @@ const ProductCard = ({ item }: { item: IProductInfo }) => {
 
 
     let badgeColor = 'text-gray-500 bg-gray-100';
-    let trendSymbol = '•';
+    let trendSymbol = '—';
 
     if (isUp) {
         badgeColor = 'text-red-600 bg-red-50';

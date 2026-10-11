@@ -24,6 +24,16 @@ const nextConfig: NextConfig = {
         hostname: "api.dicebear.com",
         pathname: "/10.x/initials/svg",
       },
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+        pathname: "/a/**",
+      },
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+        pathname: "/u/**",
+      },
     ],
   },
 };

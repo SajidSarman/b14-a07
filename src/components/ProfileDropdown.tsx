@@ -25,6 +25,7 @@ const ProfileDropdown = ({ user, onSignOut }: { user: UserSession; onSignOut: ()
                         alt="User profile avatar"
                         width={40}
                         height={40}
+                        // unoptimized
                         className="object-cover w-full h-full"
                     />
                 </div>

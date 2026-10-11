@@ -13,25 +13,15 @@ const CategoryProductsPage = async ({ dataPromise }: ListProps) => {
 
     const { categoryId } = await dataPromise;
 
+    const res = await fetch(`https://openapi.programming-hero.com/api/bazardor/products?category=${categoryId}`, {
     // const res = await fetch(`https://api.api-store.workers.dev/api/bazardor/products?category=${categoryId}`, {
-    const res = await fetch(`https://api.abcz.workers.dev/api/bazardor/products?category=${categoryId}`, {
-    // const res = await fetch(`https://api.api-store.workers.dev/api/bazardor/categories/${categoryId}`, {
+    // const res = await fetch(`https://api.abcz.workers.dev/api/bazardor/products?category=${categoryId}`, {
     // const res = await fetch(`https://api.api-store.workers.dev/api/bazardor/categories/${categoryId}`, {
         next: { revalidate: 60 }
     });
     const products: IProductInfo[] = await res.json();
 
     if (!products || products.length === 0) {
-        // return (
-        //     <div className="max-w-md mx-auto my-20 text-center select-none px-4">
-        //         <span className="text-6xl block mb-4">🔍</span>
-        //         <h1 className="text-xl font-bold text-gray-900 mb-2">দুঃখিত, কোনো পণ্য পাওয়া যায়নি!</h1>
-        //         <p className="text-sm text-gray-400 mb-6">এই ক্যাটাগরিতে এই মুহূর্তে কোনো তথ্য নেই অথবা ইউআরএলটি সঠিক নয়।</p>
-        //         <Link href="/" className="inline-block px-5 py-2.5 bg-[#007f3e] hover:bg-[#006632] text-white font-semibold text-sm rounded-lg transition-colors shadow-sm">
-        //             হোম পেজে ফিরে যান
-        //         </Link>
-        //     </div>
-        // );
         notFound();
     }
 

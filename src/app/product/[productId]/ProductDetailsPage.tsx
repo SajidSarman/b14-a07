@@ -11,12 +11,19 @@ const ProductDetailsPage = async ({ params }: PageProps) => {
 
     console.log(productId);
 
-    const res = await fetch(`https://api.api-store.workers.dev/api/bazardor/products/${productId}`, {
+    const res = await fetch(`https://openapi.programming-hero.com/api/bazardor/products/${productId}`, {
+        // const res = await fetch(`https://api.api-store.workers.dev/api/bazardor/products/${productId}`, {
         // const res = await fetch(`https://api.abcz.workers.dev/api/bazardor/products/${productId}`, {
         next: { revalidate: 60 }
     });
-    const item: IProductInfo = await res.json();
 
+    if (!res.ok && res.status !== 404) {
+        throw new Error(`Product request failed: ${res.status}`);
+    }
+
+    const item: IProductInfo | null = res.status === 404
+        ? null
+        : await res.json();
 
     if (!item) {
         notFound();
@@ -87,25 +94,25 @@ const ProductDetailsPage = async ({ params }: PageProps) => {
                 <h2 className="text-sm font-bold text-gray-800 px-1">বাজারভিত্তিক আজকের দাম</h2>
                 <div className="overflow-x-auto rounded-[20px] border border-gray-100 bg-white shadow-sm">
                     <div className="min-w-170">
-                    <div className="grid grid-cols-5 gap-5 border-b border-gray-400 bg-gray-100 px-5 py-3 text-[11px] font-bold tracking-wider text-gray-700">
-                        <div>বাজার</div>
-                        <div>বিভাগ</div>
-                        <div className="text-right">সর্বনিম্ন</div>
-                        <div className="text-right">সর্বাধিক</div>
-                        <div className="text-right">গড়</div>
-                    </div>
+                        <div className="grid grid-cols-5 gap-5 border-b border-gray-400 bg-gray-100 px-5 py-3 text-[11px] font-bold tracking-wider text-gray-700">
+                            <div>বাজার</div>
+                            <div>বিভাগ</div>
+                            <div className="text-right">সর্বনিম্ন</div>
+                            <div className="text-right">সর্বাধিক</div>
+                            <div className="text-right">গড়</div>
+                        </div>
 
-                    <div className="divide-y divide-gray-400 ">
-                        {item.markets.map((m, i) => (
-                            <div key={i} className="grid grid-cols-5 items-center gap-5 px-5 py-3.5 text-xs text-gray-600 hover:bg-gray-50">
-                                <div className="font-bold text-gray-800 truncate">{m.market}</div>
-                                <div className="font-bold">{m.division}</div>
-                                <div className="text-right font-bold">{m.min.toLocaleString('bn-BD')} টাকা</div>
-                                <div className="text-right font-bold">{m.max.toLocaleString('bn-BD')} টাকা</div>
-                                <div className="text-right font-bold text-gray-900">{Math.round((m.min + m.max) / 2).toLocaleString('bn-BD')} টাকা</div>
-                            </div>
-                        ))}
-                    </div>
+                        <div className="divide-y divide-gray-400 ">
+                            {item.markets.map((m, i) => (
+                                <div key={i} className="grid grid-cols-5 items-center gap-5 px-5 py-3.5 text-xs text-gray-600 hover:bg-gray-50">
+                                    <div className="font-bold text-gray-800 truncate">{m.market}</div>
+                                    <div className="font-bold">{m.division}</div>
+                                    <div className="text-right font-bold">{m.min.toLocaleString('bn-BD')} টাকা</div>
+                                    <div className="text-right font-bold">{m.max.toLocaleString('bn-BD')} টাকা</div>
+                                    <div className="text-right font-bold text-gray-900">{Math.round((m.min + m.max) / 2).toLocaleString('bn-BD')} টাকা</div>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>

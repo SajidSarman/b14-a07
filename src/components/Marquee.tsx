@@ -35,7 +35,7 @@ const MarketMarquee = async() => {
                     
 
                     let trendColor = 'text-gray-500';
-                    let trendSymbol = '•';
+                    let trendSymbol = '—';
                     
                     if (isUp) {
                         trendColor = 'text-red-600 font-bold';
