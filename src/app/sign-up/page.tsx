@@ -3,8 +3,9 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { type FormEvent, useState } from 'react';
-import { Button, Description, FieldError, Form, Input, Label, TextField } from '@heroui/react';
+import { Button, FieldError, Form, Input, Label, TextField } from '@heroui/react';
 import { authClient } from '@/lib/auth-client';
+import toast from 'react-hot-toast';
 
 const inputClassName = 'mt-1.5 w-full rounded-lg border border-[#dce6de] bg-transparent px-3 py-2.5 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-[#05893e] focus:ring-2 focus:ring-[#05893e]/15';
 
@@ -38,13 +39,14 @@ const SignUpPage = () => {
             });
 
             if (result.error) {
-                setError(result.error.message ?? 'অ্যাকাউন্ট তৈরি করা যায়নি। আবার চেষ্টা করুন।');
+                toast.error(result.error.message ?? 'অ্যাকাউন্ট তৈরি করা যায়নি। আবার চেষ্টা করুন।');
                 return;
             }
 
+            toast.success('অ্যাকাউন্ট তৈরি সফল হয়েছে।');
             router.replace('/');
         } catch (submitError) {
-            setError(submitError instanceof Error
+            toast.error(submitError instanceof Error
                 ? submitError.message
                 : 'সার্ভারের সঙ্গে যোগাযোগ করা যায়নি। আবার চেষ্টা করুন।');
         } finally {

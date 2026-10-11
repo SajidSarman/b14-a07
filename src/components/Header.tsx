@@ -5,6 +5,7 @@ import CurrentDate from "./CurrentDate";
 import NavLink from "./NavLink";
 import Link from "next/link";
 import MarketMarquee from "./Marquee";
+import UserInfo from "./UserInfo";
 
 const Header = () => {
 
@@ -31,15 +32,7 @@ const Header = () => {
                         </div>
                     </div>
 
-                    <div className="flex shrink-0 items-center gap-2 sm:gap-6">
-                        <Link href="/sign-in" className="whitespace-nowrap text-xs font-medium text-gray-800 transition-colors hover:text-gray-600 sm:text-base">
-                            সাইন ইন
-                        </Link>
-
-                        <Link href="/sign-up" className="whitespace-nowrap rounded-lg bg-[#05893e] px-3 py-2 text-xs font-medium text-white shadow-sm shadow-green-600 transition-all hover:bg-[#007038] sm:px-6 sm:py-2.5 sm:text-base">
-                            সাইন আপ
-                        </Link>
-                    </div>
+                    <UserInfo></UserInfo>
                 </div>
             </div>
 

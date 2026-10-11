@@ -5,17 +5,16 @@ import { useRouter } from 'next/navigation';
 import { type FormEvent, useState } from 'react';
 import { Button, FieldError, Form, Input, Label, TextField } from '@heroui/react';
 import { authClient } from '@/lib/auth-client';
+import toast from 'react-hot-toast';
 
 const inputClassName = 'mt-1.5 w-full rounded-lg border border-[#dce6de] bg-transparent px-3 py-2.5 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-[#05893e] focus:ring-2 focus:ring-[#05893e]/15';
 
 const SignInPage = () => {
     const router = useRouter();
-    const [error, setError] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        setError('');
 
         const formData = new FormData(event.currentTarget);
         const email = String(formData.get('email') ?? '').trim();
@@ -30,14 +29,15 @@ const SignInPage = () => {
             });
 
             if (result.error) {
-                setError(result.error.message ?? 'সাইন ইন করা যায়নি। আবার চেষ্টা করুন।');
-                
+                toast.error(result.error.message ?? 'সাইন ইন করা যায়নি। আবার চেষ্টা করুন।');
                 return;
             }
 
+            toast.success('সাইন ইন সফল হয়েছে।');
             router.replace('/');
+
         } catch (submitError) {
-            setError(submitError instanceof Error
+            toast.error(submitError instanceof Error
                 ? submitError.message
                 : 'সার্ভারের সঙ্গে যোগাযোগ করা যায়নি। আবার চেষ্টা করুন।');
         } finally {
@@ -95,11 +95,6 @@ const SignInPage = () => {
                             />
                             <FieldError className="text-sm text-red-600" />
                         </TextField>
-
-                        {error && (
-                            <p className="text-sm text-red-600">
-                                {error}</p>
-                        )}
 
                         <Button
                             className="mt-1 w-full rounded-lg bg-[#05893e] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#007038] disabled:cursor-not-allowed disabled:opacity-60"

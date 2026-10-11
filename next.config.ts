@@ -13,6 +13,19 @@ const nextConfig: NextConfig = {
       },
     },
   },
+
+  images: {
+    dangerouslyAllowSVG: true,
+    contentDispositionType: 'attachment',
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandboxed;",
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "api.dicebear.com",
+        pathname: "/10.x/initials/svg",
+      },
+    ],
+  },
 };
 
 export default nextConfig;
