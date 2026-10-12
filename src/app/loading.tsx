@@ -1,11 +1,7 @@
-import React from 'react';
+const Loading = () => (
+    <div className="flex flex-1 items-center justify-center bg-[#f0f5f0] py-16">
+        <p className="animate-pulse text-sm text-gray-600">লোড হচ্ছে…</p>
+    </div>
+);
 
-const loading = () => {
-    return (
-        <div>
-            Loading...
-        </div>
-    );
-};
-
-export default loading;
+export default Loading;

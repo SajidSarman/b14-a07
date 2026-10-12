@@ -13,13 +13,28 @@ const CategoryProductsPage = async ({ dataPromise }: ListProps) => {
 
     const { categoryId } = await dataPromise;
 
-    const res = await fetch(`https://openapi.programming-hero.com/api/bazardor/products?category=${categoryId}`, {
-    // const res = await fetch(`https://api.api-store.workers.dev/api/bazardor/products?category=${categoryId}`, {
-    // const res = await fetch(`https://api.abcz.workers.dev/api/bazardor/products?category=${categoryId}`, {
-    // const res = await fetch(`https://api.api-store.workers.dev/api/bazardor/categories/${categoryId}`, {
-        next: { revalidate: 60 }
-    });
-    const products: IProductInfo[] = await res.json();
+    let products: IProductInfo[];
+    try {
+        const res = await fetch(`https://openapi.programming-hero.com/api/bazardor/products?category=${categoryId}`, {
+        // const res = await fetch(`https://api.api-store.workers.dev/api/bazardor/products?category=${categoryId}`, {
+        // const res = await fetch(`https://api.abcz.workers.dev/api/bazardor/products?category=${categoryId}`, {
+        // const res = await fetch(`https://api.api-store.workers.dev/api/bazardor/categories/${categoryId}`, {
+            next: { revalidate: 60 }
+        });
+
+        if (!res.ok) {
+            throw new Error(`Category products API returned ${res.status}`);
+        }
+
+        products = await res.json();
+    } catch (error) {
+        console.error(`Failed to load products for category ${categoryId}:`, error);
+        return (
+            <p className="mx-auto w-full max-w-6xl px-4 py-8 text-center text-sm text-gray-600 sm:px-6">
+                এই বিভাগের পণ্য এখন পাওয়া যাচ্ছে না। পরে আবার চেষ্টা করুন।
+            </p>
+        );
+    }
 
     if (!products || products.length === 0) {
         notFound();
@@ -31,7 +46,7 @@ const CategoryProductsPage = async ({ dataPromise }: ListProps) => {
     const categoryIcon = firstItem?.categoryIcon;
 
     return (
-        <div className="mx-auto w-full max-w-6xl space-y-6 p-4 select-none sm:p-6">
+        <div className="mx-auto w-full max-w-6xl space-y-6 p-4 sm:p-6">
             
             <div className="text-xs text-gray-500">
                 <Link href="/" className="hover:underline">হোম</Link>

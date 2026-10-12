@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { type FormEvent, useState } from 'react';
+import { type FormEvent, useEffect, useState } from 'react';
 import { Button, FieldError, Form, Input, Label, TextField } from '@heroui/react';
 import { authClient } from '@/lib/auth-client';
 import toast from 'react-hot-toast';
@@ -14,6 +14,17 @@ const SignInPage = () => {
     const router = useRouter();
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [socialProvider, setSocialProvider] = useState<'google' | 'github' | null>(null);
+
+    useEffect(() => {
+        const url = new URL(window.location.href);
+
+        if (url.searchParams.get('reason') === 'auth-required') {
+            toast.error('এই পেজটি দেখতে আগে সাইন ইন করুন।');
+            url.searchParams.delete('reason');
+            window.history.replaceState(null, '', url);
+        }
+    }, []);
+
 
     const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();

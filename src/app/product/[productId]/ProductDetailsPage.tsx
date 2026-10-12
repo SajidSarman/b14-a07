@@ -9,21 +9,27 @@ interface PageProps {
 const ProductDetailsPage = async ({ params }: PageProps) => {
     const { productId } = await params;
 
-    console.log(productId);
+    let item: IProductInfo | null;
+    try {
+        const res = await fetch(`https://openapi.programming-hero.com/api/bazardor/products/${productId}`, {
+            // const res = await fetch(`https://api.api-store.workers.dev/api/bazardor/products/${productId}`, {
+            // const res = await fetch(`https://api.abcz.workers.dev/api/bazardor/products/${productId}`, {
+            next: { revalidate: 60 }
+        });
 
-    const res = await fetch(`https://openapi.programming-hero.com/api/bazardor/products/${productId}`, {
-        // const res = await fetch(`https://api.api-store.workers.dev/api/bazardor/products/${productId}`, {
-        // const res = await fetch(`https://api.abcz.workers.dev/api/bazardor/products/${productId}`, {
-        next: { revalidate: 60 }
-    });
+        item = res.status === 404 ? null : await res.json();
 
-    if (!res.ok && res.status !== 404) {
-        throw new Error(`Product request failed: ${res.status}`);
+        if (!res.ok && res.status !== 404) {
+            throw new Error(`Product request failed: ${res.status}`);
+        }
+    } catch (error) {
+        console.error(`Failed to load product ${productId}:`, error);
+        return (
+            <p className="mx-auto w-full max-w-6xl px-4 py-8 text-center text-sm text-gray-600 sm:px-6">
+                পণ্যের তথ্য এখন পাওয়া যাচ্ছে না। পরে আবার চেষ্টা করুন।
+            </p>
+        );
     }
-
-    const item: IProductInfo | null = res.status === 404
-        ? null
-        : await res.json();
 
     if (!item) {
         notFound();

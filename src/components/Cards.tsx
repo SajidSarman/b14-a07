@@ -3,26 +3,29 @@ import ProductCard from './ProductCard';
 import { IProductInfo } from '@/types/ProductInfo';
 
 
-// interface Headlines {
-//     id: number;
-//     image?: string;
-//     categoryIcon?: string;
-//     nameBn: string;
-//     today: number;
-//     unit: string;
-//     change?: { 
-//         dir: 'up' | 'down' | 'flat'; 
-//         pct: number; 
-//     };
-// }
 
 const Cards = async() => {
-    const res = await fetch("https://openapi.programming-hero.com/api/bazardor/products", {
-    // const res = await fetch("https://api.api-store.workers.dev/api/bazardor/products", {
-    // const res = await fetch("https://api.abcz.workers.dev/api/bazardor/products", {
-        next: { revalidate: 60 }
-    });
-    const data: IProductInfo[] = await res.json();
+    let data: IProductInfo[];
+    try {
+        const res = await fetch("https://openapi.programming-hero.com/api/bazardor/products", {
+        // const res = await fetch("https://api.api-store.workers.dev/api/bazardor/products", {
+        // const res = await fetch("https://api.abcz.workers.dev/api/bazardor/products", {
+            next: { revalidate: 60 }
+        });
+
+        if (!res.ok) {
+            throw new Error(`Products API returned ${res.status}`);
+        }
+
+        data = await res.json();
+    } catch (error) {
+        console.error('Failed to load products:', error);
+        return (
+            <p className="mx-auto w-full max-w-6xl px-4 py-8 text-center text-sm text-gray-600 sm:px-6">
+                পণ্যের তথ্য এখন পাওয়া যাচ্ছে না। পরে আবার চেষ্টা করুন।
+            </p>
+        );
+    }
 
     const upProducts = data
         .filter(item => item.change?.dir === 'up')
@@ -39,7 +42,7 @@ const Cards = async() => {
     const totalProducts = data.length.toLocaleString('bn-BD');
 
     return (
-        <div className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 sm:py-8">
+        <div id="সব-পণ্য" className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 sm:py-8">
        
 
             {upProducts.length > 0 && (

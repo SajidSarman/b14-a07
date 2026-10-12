@@ -1,6 +1,9 @@
-# Bazar Dor - B14-A7
+# Bazar Dor - B14-A07
 
-It's a Bengla-language web app for checking current prices of everyday products. It brings product prices, market comparisons, and daily price changes together in one place.
+It's a Bangla-language web app for checking current prices of everyday products. It brings product prices, market comparisons, and daily price changes together in one place.
+
+## Live Link
+https://bazar-dor-b14-a07-s-sarman.vercel.app/
 
 ## Technologies
 

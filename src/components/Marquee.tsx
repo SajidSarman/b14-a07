@@ -13,14 +13,28 @@ import Marquee from "react-fast-marquee";
 // }
 
 const MarketMarquee = async() => {
-    const res = await fetch("https://api.api-store.workers.dev/api/bazardor/products", {
-    // const res = await fetch("https://api.abcz.workers.dev/api/bazardor/products", {
-    next: { revalidate: 60 }
-})
+    let data: IProductInfo[];
+    try {
+        const res = await fetch("https://api.api-store.workers.dev/api/bazardor/products", {
+        // const res = await fetch("https://api.abcz.workers.dev/api/bazardor/products", {
+            next: { revalidate: 60 }
+        });
 
-    const data: IProductInfo[] = await res.json()
+        if (!res.ok) {
+            throw new Error(`Products API returned ${res.status}`);
+        }
+
+        data = await res.json();
+    } catch (error) {
+        console.error('Failed to load market ticker:', error);
+        return (
+            <div className="w-full border-y border-gray-200 bg-gray-50 py-2 text-center text-sm text-gray-500">
+                বাজারদর এখন পাওয়া যাচ্ছে না।
+            </div>
+        );
+    }
+
     const topTen = data.slice(0, 10)
-    // console.log("Marquee: ", topTen)
     
 
     return (
